@@ -32,14 +32,37 @@ currTrainTbl.append(scheduleTHead);
 $("#currentTrainSchd").append(currTrainTbl);
 
 
-
 // Firebase watcher + updating the Train Schedule table
 database.ref().on("child_added", function(snapshot) {
+
+    
+    var dbStartTime = snapshot.val().startTime;
+    var mStartTime = moment(dbStartTime, "HH:mm").subtract(1, "years");
+    console.log("mStartTime ", mStartTime);
+    console.log("test ", moment(mStartTime).format("hh:mm"))
+    var convertStartTime = moment(mStartTime).format("hh:mm");
+    var diffTime = moment().diff(moment(mStartTime), "minutes");
+    console.log("diffTime ", diffTime);
+    var tFrequency = snapshot.val().frequency;
+    var tRemainder = diffTime % tFrequency;
+    console.log("tfrequency ", tFrequency);
+    var minutesAway = tFrequency - tRemainder;
+    var nextArrival = moment().add(minutesAway, "hh:mm").format("hh:mm");
+    console.log("next arrival ", nextArrival);
+    //console.log("Test ", moment(startTime).format("hh:mm"))
+    // console.log("start time ", startTime)
+    // console.log(startTime.constructor == String)
+    // var currentTime = moment();
+    // var diffTime = moment().diff(moment("09:30"), "minutes");
+    // console.log("What is this ", moment(startTime))
+    // console.log("startTime ", startTime)
+    // console.log("DIFFERENCE IN TIME: " + moment(startTime));
+
 
     // Log everything that's coming out of snapshot
     // console.log(snapshot.val().name);
     // console.log(snapshot.val().dest);
-    console.log(snapshot.val().startTime);
+    // console.log(snapshot.val().startTime);
     // console.log(snapshot.val().frequency);
     
     // Change the HTML Table to reflect this (#currTrainTbl)
@@ -47,7 +70,8 @@ database.ref().on("child_added", function(snapshot) {
     scheduleRowData.append("<th>" + snapshot.val().name + "</th>");
     scheduleRowData.append("<th>" + snapshot.val().dest + "</th>");
     scheduleRowData.append("<th>" + snapshot.val().frequency + "</th>");
-    // scheduleRowData.append("<th>" + snapshot.val().startTime + "</th>");
+    scheduleRowData.append("<th>" + nextArrival + "</th>");
+    scheduleRowData.append("<th>" + minutesAway + "</th>");
 
     var scheduleTbody = $("<tbody>");
     scheduleTbody.append(scheduleRowData);
@@ -94,9 +118,9 @@ function show(msg) {
 };
 
 // Military Time
-show(database.ref());
+//show(JSON.stringify(database.ref().startTime));
 // 3:30 PM
-show(moment(database.ref().startTime).format("hh:mm A"));
+//show(moment(database.ref().startTime).format("hh:mm A"));
 
 // var randomDate = "02/23/1999";
 // var randomFormat = "MM/DD/YYYY";
