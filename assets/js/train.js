@@ -37,10 +37,10 @@ $("#currentTrainSchd").append(currTrainTbl);
 database.ref().on("child_added", function(snapshot) {
 
     // Log everything that's coming out of snapshot
-    console.log(snapshot.val().name);
-    console.log(snapshot.val().dest);
+    // console.log(snapshot.val().name);
+    // console.log(snapshot.val().dest);
     console.log(snapshot.val().startTime);
-    console.log(snapshot.val().frequency);
+    // console.log(snapshot.val().frequency);
     
     // Change the HTML Table to reflect this (#currTrainTbl)
     var scheduleRowData = $("<tr>");
@@ -53,11 +53,6 @@ database.ref().on("child_added", function(snapshot) {
     scheduleTbody.append(scheduleRowData);
 
     $("#currTrainTbl").append(scheduleTbody);
-    
-    // $("#name-display").text(snapshot.val().name);
-    // $("#email-display").text(snapshot.val().email);
-    // $("#age-display").text(snapshot.val().age);
-    // $("#comment-display").text(snapshot.val().comment);
 
     // Handle the errors
   }, function(errorObject) {
@@ -90,6 +85,27 @@ adminForm.append(adminDiv);
 $("#trainAdminDiv").append(adminForm);
 
 
+
+// Testing Moment JS library
+function show(msg) {
+
+    $('.console').append(`<p>${msg}</p>`);
+    console.log(msg);
+};
+
+// Military Time
+show(database.ref());
+// 3:30 PM
+show(moment(database.ref().startTime).format("hh:mm A"));
+
+// var randomDate = "02/23/1999";
+// var randomFormat = "MM/DD/YYYY";
+// var convertedDate = moment(randomDate, randomFormat);
+
+// show(moment(convertedDate).format("MM/DD/YY"));
+// show(moment(convertedDate).format("MMM Do, YYYY hh:mm:ss"));
+// show(moment(convertedDate).format("X"));
+// show("----------------------------------------");
 
 // The Train Admin should use this submit button to send train schedule data
 $('#adminSubmit').on('click', function(event){
