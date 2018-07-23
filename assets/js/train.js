@@ -35,35 +35,31 @@ $("#currentTrainSchd").append(currTrainTbl);
 // Firebase watcher + updating the Train Schedule table
 database.ref().on("child_added", function(snapshot) {
 
-    
+    // The start time from firebase and the startime entered by the train admin
     var dbStartTime = snapshot.val().startTime;
     var mStartTime = moment(dbStartTime, "HH:mm").subtract(1, "years");
-    console.log("mStartTime ", mStartTime);
-    console.log("test ", moment(mStartTime).format("hh:mm"))
-    var convertStartTime = moment(mStartTime).format("hh:mm");
+    console.log("Start Time Test ", moment(mStartTime).format("hh:mm"))
+
+    // var convertStartTime = moment(mStartTime).format("hh:mm");
+
+    // Difference between the current time and the next start time
     var diffTime = moment().diff(moment(mStartTime), "minutes");
-    console.log("diffTime ", diffTime);
+
+    // Frequency of each train eneterd by the train admin
     var tFrequency = snapshot.val().frequency;
+
+    // Remainder for figuring out the minutes remaining until the next train
     var tRemainder = diffTime % tFrequency;
-    console.log("tfrequency ", tFrequency);
+    // console.log("tfrequency ", tFrequency);
+
+    // Calculating the remaining minutes until the next train to post to the schedule
     var minutesAway = tFrequency - tRemainder;
-    var nextArrival = moment().add(minutesAway, "hh:mm").format("hh:mm");
+    console.log("minutes away ", minutesAway);
+
+    // Just formatting the time of the next arrival to display on the schedule
+    var nextArrival = moment().add(minutesAway, "minutes").format("hh:mm A");
     console.log("next arrival ", nextArrival);
-    //console.log("Test ", moment(startTime).format("hh:mm"))
-    // console.log("start time ", startTime)
-    // console.log(startTime.constructor == String)
-    // var currentTime = moment();
-    // var diffTime = moment().diff(moment("09:30"), "minutes");
-    // console.log("What is this ", moment(startTime))
-    // console.log("startTime ", startTime)
-    // console.log("DIFFERENCE IN TIME: " + moment(startTime));
 
-
-    // Log everything that's coming out of snapshot
-    // console.log(snapshot.val().name);
-    // console.log(snapshot.val().dest);
-    // console.log(snapshot.val().startTime);
-    // console.log(snapshot.val().frequency);
     
     // Change the HTML Table to reflect this (#currTrainTbl)
     var scheduleRowData = $("<tr>");
@@ -108,28 +104,6 @@ var adminForm = $("<form>");
 adminForm.append(adminDiv);
 $("#trainAdminDiv").append(adminForm);
 
-
-
-// Testing Moment JS library
-function show(msg) {
-
-    $('.console').append(`<p>${msg}</p>`);
-    console.log(msg);
-};
-
-// Military Time
-//show(JSON.stringify(database.ref().startTime));
-// 3:30 PM
-//show(moment(database.ref().startTime).format("hh:mm A"));
-
-// var randomDate = "02/23/1999";
-// var randomFormat = "MM/DD/YYYY";
-// var convertedDate = moment(randomDate, randomFormat);
-
-// show(moment(convertedDate).format("MM/DD/YY"));
-// show(moment(convertedDate).format("MMM Do, YYYY hh:mm:ss"));
-// show(moment(convertedDate).format("X"));
-// show("----------------------------------------");
 
 // The Train Admin should use this submit button to send train schedule data
 $('#adminSubmit').on('click', function(event){
