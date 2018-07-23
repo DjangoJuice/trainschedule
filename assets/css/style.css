@@ -1,0 +1,55 @@
+body {
+    background-image: url(../images/FWRY_Thomas_Train-dark.JPG);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: black;
+    color: white;
+
+}
+
+.bodyHeaderTitle {
+    font-size: 1.7em;
+    letter-spacing: .5em;
+    font-family: 'Arial', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+h1 {
+    font-weight: 800;
+}
+
+#currentTrainSchd {
+    height: 40%;
+    padding-bottom: 4em;
+    font-size: 1.5em;
+}
+
+#trainAdminTitle {
+    margin-left: 1em;
+    margin-top: .5em;
+    font-size: 1.7em;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#trainAdminForm {
+    border: solid 2px white;
+}
+
+div#trainAdminForm label {
+    font-size: 1.2em;
+    margin-left: 1em;
+}
+
+#adminSubmit {
+    font-size: 1.2em;
+    margin-left: 1em;
+    margin-bottom: 1em;
+    background-color: blueviolet;
+    border: red;
+}
+
+.form-control {
+    margin-left: 1em;
+    margin-bottom: 1em;
+    max-width: 75%;
+}

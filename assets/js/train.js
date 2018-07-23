@@ -85,6 +85,8 @@ database.ref().on("child_added", function(snapshot) {
 var adminDiv = $("<div>");
 adminDiv.attr({"class": "form-group", "id":"trainAdminForm"});
 
+adminDiv.append("<p id='trainAdminTitle'>Train Administration</p>");
+
 adminDiv.append("<label for='trainName'>Train Name</label>");
 adminDiv.append("<input type='text' class='form-control' id='adminTrainName' aria-describedby='trainName' placeholder='Enter train name'>");
 
